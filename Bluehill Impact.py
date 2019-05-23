@@ -38,7 +38,16 @@ def IMPACT(folder):
         force.append(F)
         E = dfs[i]['Energy (J)']
         energy.append(E)
-     
+    
+    #This is where the fun starts
+    #Each specimen has a main peak that needs to be isolated - the goal is to plot only a specific ~1.5 milliseconds of data out of ~30ms recorded
+    #peak force is easily identified
+    #a critical value of .5% peak force is used for start and end of the peak - but the data oscillates and this line is crossed many times 
+    #data is split at the force max peak
+    #the lower part finds the last indexed point that is at least .5% of the max peak (on the left side of the peak)
+    # the higher part finds the first indexed point that is less than .5% of the max peak and then subtracts 1 (to move inside the defined bounds)
+    #enery at the end of the peak is found by using the peak_end index value in the previously made energy list
+    #time is adjusted so everything starts at 0ms
     peak_end_times = []
     peak_force = []  
     etot = []
